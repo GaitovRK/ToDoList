@@ -8,6 +8,30 @@
 import Foundation
 
 class TaskListInteractor: TaskListInteractorInput {
+    func fetchTaskList() {
+        
+    }
+    
+    func addTask(title: String, description: String) {
+        
+    }
+    
+    func editTask(at index: Int, title: String, description: String) {
+        
+    }
+    
+    func deleteTask(at index: Int) {
+        
+    }
+    
+    func searchTasks(with query: String) -> [Task] {
+        return [Task(title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
+    }
+    
+    func getAllTasks() -> [Task] {
+        return [Task(title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
+    }
+    
     var output: TaskListInteractorOutput?
     private var repo: TaskListRepo?
     
@@ -15,3 +39,9 @@ class TaskListInteractor: TaskListInteractorInput {
         self.repo = repo
     }
 }
+
+class TaskListRepoImplementation: TaskListRepo {
+    func fetchTasks(completion: @escaping ([Task]?, Error?) -> Void) {
+        
+    }
+}   

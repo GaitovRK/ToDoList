@@ -23,6 +23,7 @@
 		5CF2F4C82D63518D00E67C13 /* TaskListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4C72D63518D00E67C13 /* TaskListInteractor.swift */; };
 		5CF2F4CB2D63522200E67C13 /* TaskListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4CA2D63522200E67C13 /* TaskListPresenter.swift */; };
 		5CF2F4CD2D6352BC00E67C13 /* TaskListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4CC2D6352BC00E67C13 /* TaskListRouter.swift */; };
+		5CF2F4CF2D63641100E67C13 /* TaskTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4CE2D63641100E67C13 /* TaskTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -63,6 +64,7 @@
 		5CF2F4C72D63518D00E67C13 /* TaskListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListInteractor.swift; sourceTree = "<group>"; };
 		5CF2F4CA2D63522200E67C13 /* TaskListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListPresenter.swift; sourceTree = "<group>"; };
 		5CF2F4CC2D6352BC00E67C13 /* TaskListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskListRouter.swift; sourceTree = "<group>"; };
+		5CF2F4CE2D63641100E67C13 /* TaskTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -151,6 +153,7 @@
 		5CF2F4BC2D634FA600E67C13 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5CF2F4CE2D63641100E67C13 /* TaskTableViewCell.swift */,
 				5CF2F4C52D6350E100E67C13 /* TaskListViewController.swift */,
 			);
 			path = Views;
@@ -321,6 +324,7 @@
 			files = (
 				5CF2F4C62D6350E100E67C13 /* TaskListViewController.swift in Sources */,
 				5CF2F4C22D63500600E67C13 /* Protocols.swift in Sources */,
+				5CF2F4CF2D63641100E67C13 /* TaskTableViewCell.swift in Sources */,
 				5CF2F4CB2D63522200E67C13 /* TaskListPresenter.swift in Sources */,
 				5CF2F48E2D634F7200E67C13 /* ViewController.swift in Sources */,
 				5CF2F48A2D634F7200E67C13 /* AppDelegate.swift in Sources */,

@@ -23,5 +23,13 @@ final class TaskListPresenterImplementation: TaskListPresenter {
 }
 
 extension TaskListPresenterImplementation: TaskListInteractorOutput {
+    func fetchTasksSuccess(tasks: [Task]) {
+        
+    }
+    
+    func fetchTasksFailure(error: Error) {
+
+    }
+    
     
 }
