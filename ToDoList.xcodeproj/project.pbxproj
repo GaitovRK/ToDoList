@@ -17,6 +17,7 @@
 		5CF2F4A42D634F7400E67C13 /* ToDoListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4A32D634F7400E67C13 /* ToDoListTests.swift */; };
 		5CF2F4AE2D634F7400E67C13 /* ToDoListUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4AD2D634F7400E67C13 /* ToDoListUITests.swift */; };
 		5CF2F4B02D634F7400E67C13 /* ToDoListUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4AF2D634F7400E67C13 /* ToDoListUITestsLaunchTests.swift */; };
+		5CF2F4C22D63500600E67C13 /* Protocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4C12D63500600E67C13 /* Protocols.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		5CF2F4A92D634F7400E67C13 /* ToDoListUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDoListUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF2F4AD2D634F7400E67C13 /* ToDoListUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListUITests.swift; sourceTree = "<group>"; };
 		5CF2F4AF2D634F7400E67C13 /* ToDoListUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoListUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		5CF2F4C12D63500600E67C13 /* Protocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Protocols.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,11 @@
 		5CF2F4882D634F7200E67C13 /* ToDoList */ = {
 			isa = PBXGroup;
 			children = (
+				5CF2F4C02D634FC700E67C13 /* Routers */,
+				5CF2F4BF2D634FBD00E67C13 /* Entities */,
+				5CF2F4BE2D634FB300E67C13 /* Presenters */,
+				5CF2F4BD2D634FAD00E67C13 /* Interactors */,
+				5CF2F4BC2D634FA600E67C13 /* Views */,
 				5CF2F4892D634F7200E67C13 /* AppDelegate.swift */,
 				5CF2F48B2D634F7200E67C13 /* SceneDelegate.swift */,
 				5CF2F48D2D634F7200E67C13 /* ViewController.swift */,
@@ -109,6 +116,7 @@
 				5CF2F4972D634F7300E67C13 /* LaunchScreen.storyboard */,
 				5CF2F49A2D634F7300E67C13 /* Info.plist */,
 				5CF2F4922D634F7200E67C13 /* ToDoList.xcdatamodeld */,
+				5CF2F4C12D63500600E67C13 /* Protocols.swift */,
 			);
 			path = ToDoList;
 			sourceTree = "<group>";
@@ -128,6 +136,41 @@
 				5CF2F4AF2D634F7400E67C13 /* ToDoListUITestsLaunchTests.swift */,
 			);
 			path = ToDoListUITests;
+			sourceTree = "<group>";
+		};
+		5CF2F4BC2D634FA600E67C13 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5CF2F4BD2D634FAD00E67C13 /* Interactors */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Interactors;
+			sourceTree = "<group>";
+		};
+		5CF2F4BE2D634FB300E67C13 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		5CF2F4BF2D634FBD00E67C13 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		5CF2F4C02D634FC700E67C13 /* Routers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Routers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -261,6 +304,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5CF2F4C22D63500600E67C13 /* Protocols.swift in Sources */,
 				5CF2F48E2D634F7200E67C13 /* ViewController.swift in Sources */,
 				5CF2F48A2D634F7200E67C13 /* AppDelegate.swift in Sources */,
 				5CF2F48C2D634F7200E67C13 /* SceneDelegate.swift in Sources */,
