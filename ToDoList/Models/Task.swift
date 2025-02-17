@@ -8,8 +8,9 @@
 import Foundation
 
 struct Task {
+    let id: String
     var title: String
     var description: String
-    var creationDate: Date
+    let creationDate: Date
     var isCompleted: Bool
 }

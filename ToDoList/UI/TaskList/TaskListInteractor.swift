@@ -7,6 +7,20 @@
 
 import Foundation
 
+protocol TaskListInteractorInput {
+    func fetchTaskList()
+    func addTask(title: String, description: String)
+    func editTask(at index: Int, title: String, description: String)
+    func deleteTask(at index: Int)
+    func searchTasks(with query: String) -> [Task]
+    func getAllTasks() -> [Task]
+}
+
+protocol TaskListInteractorOutput {
+    func fetchTasksSuccess(tasks: [Task])
+    func fetchTasksFailure(error: Error)
+}
+
 class TaskListInteractor: TaskListInteractorInput {
     func fetchTaskList() {
         
@@ -25,11 +39,11 @@ class TaskListInteractor: TaskListInteractorInput {
     }
     
     func searchTasks(with query: String) -> [Task] {
-        return [Task(title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
+        return [Task(id: "1", title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
     }
     
     func getAllTasks() -> [Task] {
-        return [Task(title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
+        return [Task(id: "2", title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
     }
     
     var output: TaskListInteractorOutput?

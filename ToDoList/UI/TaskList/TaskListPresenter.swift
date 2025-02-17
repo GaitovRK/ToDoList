@@ -7,6 +7,11 @@
 
 import Foundation
 
+protocol TaskListPresenter: AnyObject {
+    func viewDidLoad(view: TaskListView)
+}
+
+
 final class TaskListPresenterImplementation: TaskListPresenter {
     weak var view: TaskListView?
     var interactor: TaskListInteractorInput

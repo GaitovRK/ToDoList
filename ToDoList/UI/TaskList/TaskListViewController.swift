@@ -8,6 +8,10 @@
 import Foundation
 import UIKit
 
+protocol TaskListView: AnyObject {
+    func show(tasks: [Task])
+}
+
 final class TaskListViewController: UIViewController, TaskListView {
     func show(tasks: [Task]) {
         

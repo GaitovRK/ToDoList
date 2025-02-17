@@ -7,7 +7,8 @@
 
 import Foundation
 import UIKit
-
+protocol TaskListRouter {
+}
 final class TaskListRouterImplementation: TaskListRouter {
     weak var viewController: UIViewController?
 }
