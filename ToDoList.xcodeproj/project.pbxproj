@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		5C969A442D638FF500EEDCC8 /* TasksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C969A432D638FF500EEDCC8 /* TasksRepository.swift */; };
+		5C969A492D65B50E00EEDCC8 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C969A482D65B50E00EEDCC8 /* NetworkService.swift */; };
+		5C969A4C2D66315800EEDCC8 /* TasksRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C969A4B2D66315800EEDCC8 /* TasksRequestDTO.swift */; };
+		5C969A4E2D66319300EEDCC8 /* TasksResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C969A4D2D66319300EEDCC8 /* TasksResponseDTO.swift */; };
 		5CF2F48A2D634F7200E67C13 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4892D634F7200E67C13 /* AppDelegate.swift */; };
 		5CF2F48C2D634F7200E67C13 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F48B2D634F7200E67C13 /* SceneDelegate.swift */; };
 		5CF2F4942D634F7200E67C13 /* ToDoList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 5CF2F4922D634F7200E67C13 /* ToDoList.xcdatamodeld */; };
@@ -43,6 +46,9 @@
 
 /* Begin PBXFileReference section */
 		5C969A432D638FF500EEDCC8 /* TasksRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksRepository.swift; sourceTree = "<group>"; };
+		5C969A482D65B50E00EEDCC8 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		5C969A4B2D66315800EEDCC8 /* TasksRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksRequestDTO.swift; sourceTree = "<group>"; };
+		5C969A4D2D66319300EEDCC8 /* TasksResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksResponseDTO.swift; sourceTree = "<group>"; };
 		5CF2F4862D634F7200E67C13 /* ToDoList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ToDoList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5CF2F4892D634F7200E67C13 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		5CF2F48B2D634F7200E67C13 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -109,6 +115,7 @@
 		5C969A3D2D638F5E00EEDCC8 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				5C969A4A2D66313100EEDCC8 /* DataMapping */,
 				5C969A432D638FF500EEDCC8 /* TasksRepository.swift */,
 			);
 			path = Data;
@@ -135,6 +142,7 @@
 		5C969A402D638FB200EEDCC8 /* NetworkService */ = {
 			isa = PBXGroup;
 			children = (
+				5C969A482D65B50E00EEDCC8 /* NetworkService.swift */,
 			);
 			path = NetworkService;
 			sourceTree = "<group>";
@@ -179,6 +187,15 @@
 				5CF2F4CE2D63641100E67C13 /* TaskTableViewCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		5C969A4A2D66313100EEDCC8 /* DataMapping */ = {
+			isa = PBXGroup;
+			children = (
+				5C969A4B2D66315800EEDCC8 /* TasksRequestDTO.swift */,
+				5C969A4D2D66319300EEDCC8 /* TasksResponseDTO.swift */,
+			);
+			path = DataMapping;
 			sourceTree = "<group>";
 		};
 		5CF2F47D2D634F7200E67C13 = {
@@ -363,8 +380,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5C969A492D65B50E00EEDCC8 /* NetworkService.swift in Sources */,
 				5CF2F4C62D6350E100E67C13 /* TaskListViewController.swift in Sources */,
 				5CF2F4CF2D63641100E67C13 /* TaskTableViewCell.swift in Sources */,
+				5C969A4E2D66319300EEDCC8 /* TasksResponseDTO.swift in Sources */,
 				5CF2F4CB2D63522200E67C13 /* TaskListPresenter.swift in Sources */,
 				5CF2F48A2D634F7200E67C13 /* AppDelegate.swift in Sources */,
 				5C969A442D638FF500EEDCC8 /* TasksRepository.swift in Sources */,
@@ -372,6 +391,7 @@
 				5CF2F48C2D634F7200E67C13 /* SceneDelegate.swift in Sources */,
 				5CF2F4C82D63518D00E67C13 /* TaskListInteractor.swift in Sources */,
 				5CF2F4C42D63505B00E67C13 /* Task.swift in Sources */,
+				5C969A4C2D66315800EEDCC8 /* TasksRequestDTO.swift in Sources */,
 				5CF2F4942D634F7200E67C13 /* ToDoList.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

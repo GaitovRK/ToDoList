@@ -14,7 +14,8 @@ protocol TaskListView: AnyObject {
 
 final class TaskListViewController: UIViewController, TaskListView, UISearchResultsUpdating {
     func show(tasks: [Task]) {
-
+        self.tasks = tasks
+        self.tableView.reloadData()
     }
     
     var presenter: TaskListPresenter
@@ -22,21 +23,6 @@ final class TaskListViewController: UIViewController, TaskListView, UISearchResu
     private var tasks: [Task] = []
     private var filteredTasks: [Task] = []
     private let searchController = UISearchController(searchResultsController: nil)
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
- 
-        title = "Задачи"
-
-        tasks = [
-            Task(id: "1", title: "Почитать книгу", description: "Составить список необходимых продуктов для ужина. Не забыть проверить, что уже есть в холодильнике.", creationDate: Date(), isCompleted: false),
-            Task(id: "2", title: "Уборка в квартире", description: "Провести генеральную уборку в квартире", creationDate: Date(), isCompleted: true),
-            Task(id: "3", title: "Заняться спортом", description: "Сходить в спортзал или сделать тренировку дома. Не забыть про разминку и растяжку!", creationDate: Date(), isCompleted: false),
-            Task(id: "4", title: "Работа над проектом", description: "Выделить время для работы над проектом на работе. Сфокусироваться на выполнении важных задач", creationDate: Date(), isCompleted: true),
-            Task(id: "5", title: "Read book", description: "Read 'The Great Gatsby'", creationDate: Date(), isCompleted: false)
-        ]
-        tableView.reloadData()
-    } 
     
     init(presenter: TaskListPresenter) {
         self.presenter = presenter
@@ -47,6 +33,22 @@ final class TaskListViewController: UIViewController, TaskListView, UISearchResu
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.viewDidLoad(view: self)
+ 
+        title = "Задачи"
+
+//        tasks = [
+//            Task(id: "1", title: "Почитать книгу", description: "Составить список необходимых продуктов для ужина. Не забыть проверить, что уже есть в холодильнике.", creationDate: Date(), isCompleted: false),
+//            Task(id: "2", title: "Уборка в квартире", description: "Провести генеральную уборку в квартире", creationDate: Date(), isCompleted: true),
+//            Task(id: "3", title: "Заняться спортом", description: "Сходить в спортзал или сделать тренировку дома. Не забыть про разминку и растяжку!", creationDate: Date(), isCompleted: false),
+//            Task(id: "4", title: "Работа над проектом", description: "Выделить время для работы над проектом на работе. Сфокусироваться на выполнении важных задач", creationDate: Date(), isCompleted: true),
+//            Task(id: "5", title: "Read book", description: "Read 'The Great Gatsby'", creationDate: Date(), isCompleted: false)
+//        ]
+        tableView.reloadData()
     }
 
     private func setupSearchController() {
@@ -129,3 +131,16 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.register(TaskTableViewCell.self, forCellReuseIdentifier: "TaskCell")
     }
 }
+
+//extension TaskListViewController: TaskListInteractorOutput {
+//    func fetchTasksSuccess(tasks: [Task]) {
+//        self.tasks = tasks
+//        self.tableView.reloadData()
+//    }
+//    
+//    func fetchTasksFailure(error: Error) {
+//        let alert = UIAlertController(title: "Alert", message: "Problem Fetching Tasks", preferredStyle: .alert)
+//        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
+//        self.present(alert, animated: true, completion: nil)
+//    }
+//}

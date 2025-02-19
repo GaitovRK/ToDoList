@@ -13,7 +13,8 @@ protocol TaskListPresenter: AnyObject {
 
 
 final class TaskListPresenterImplementation: TaskListPresenter {
-    weak var view: TaskListView?
+    
+    weak var view: TaskListViewController?
     var interactor: TaskListInteractorInput
     var router: TaskListRouter
     
@@ -23,18 +24,19 @@ final class TaskListPresenterImplementation: TaskListPresenter {
     }
     
     func viewDidLoad(view: TaskListView) {
-        
+        interactor.fetchTaskList()
+        print("Presenter viewDidLoad")
     }
 }
 
 extension TaskListPresenterImplementation: TaskListInteractorOutput {
     func fetchTasksSuccess(tasks: [Task]) {
-        
+        view?.show(tasks: tasks)
     }
     
-    func fetchTasksFailure(error: Error) {
-
-    }
+//    func fetchTasksFailure(error: Error) {
+//        view?.fetchTasksFailure(error: error)
+//    }
     
     
 }

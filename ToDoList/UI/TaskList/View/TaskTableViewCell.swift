@@ -90,4 +90,14 @@ class TaskTableViewCell: UITableViewCell {
             titleLabel.attributedText = NSAttributedString(string: task.title)
         }
     }
-} 
+    
+    override func prepareForReuse() {
+            super.prepareForReuse()
+            titleLabel.text = nil
+            titleLabel.attributedText = nil
+            titleLabel.textColor = .white
+            descriptionLabel.text = nil
+            descriptionLabel.textColor = .black
+            checkboxButton.isSelected = false
+        }
+}

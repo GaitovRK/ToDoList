@@ -8,7 +8,7 @@
 import Foundation
 
 struct Task {
-    let id: String
+    let id: Int
     var title: String
     var description: String
     let creationDate: Date
