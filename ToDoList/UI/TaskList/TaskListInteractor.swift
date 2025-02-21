@@ -18,12 +18,22 @@ protocol TaskListInteractorInput {
 
 protocol TaskListInteractorOutput {
     func fetchTasksSuccess(tasks: [Task])
-    func fetchTasksFailure(error: Error)
+//    func fetchTasksFailure(error: Error)
 }
 
 class TaskListInteractor: TaskListInteractorInput {
+    
+    var output: TaskListInteractorOutput?
+    private var repo: TasksRepository?
+    
+    init(repo: TasksRepository) {
+        self.repo = repo
+    }
+    
     func fetchTaskList() {
-        
+        repo?.fetchTasks(completion: { tasks in
+            self.output?.fetchTasksSuccess(tasks: tasks)
+        })
     }
     
     func addTask(title: String, description: String) {
@@ -39,23 +49,12 @@ class TaskListInteractor: TaskListInteractorInput {
     }
     
     func searchTasks(with query: String) -> [Task] {
-        return [Task(id: "1", title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
+        return [Task(id: 1, title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
     }
     
     func getAllTasks() -> [Task] {
-        return [Task(id: "2", title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
+        return [Task(id: 2, title: "Task 1", description: "Description 1", creationDate: Date(), isCompleted: false)]
     }
     
-    var output: TaskListInteractorOutput?
-    private var repo: TaskListRepo?
     
-    init(repo: TaskListRepo) {
-        self.repo = repo
-    }
 }
-
-class TaskListRepoImplementation: TaskListRepo {
-    func fetchTasks(completion: @escaping ([Task]?, Error?) -> Void) {
-        
-    }
-}   

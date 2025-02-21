@@ -18,11 +18,11 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let presenter = TaskListPresenterImplementation(interactor: TaskListInteractor(repo: TaskListRepoImplementation()), router: TaskListRouterImplementation())
-        let taskListViewController = TaskListViewController(presenter: presenter)
-        window?.tintColor = .systemYellow
+
+        let taskListViewController = TaskListRouterImplementation.createTaskListModule()
         let navigationController = UINavigationController(rootViewController: taskListViewController)
         navigationController.navigationBar.prefersLargeTitles = true
+        window?.tintColor = .systemYellow
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
     }
