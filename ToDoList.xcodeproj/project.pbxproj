@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		5C5F39A02D687F460097D80A /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5F399F2D687F460097D80A /* CoreDataService.swift */; };
+		5C5F39A22D68B0B00097D80A /* TaskDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5F39A12D68B0B00097D80A /* TaskDetailViewController.swift */; };
+		5C5F39A42D68B1AA0097D80A /* TaskDetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5F39A32D68B1AA0097D80A /* TaskDetailPresenter.swift */; };
+		5C5F39A62D68B32C0097D80A /* TaskDetailInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5F39A52D68B32C0097D80A /* TaskDetailInteractor.swift */; };
+		5C5F39AA2D68C3EE0097D80A /* TaskDetailRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C5F39A92D68C3EE0097D80A /* TaskDetailRouter.swift */; };
 		5C969A442D638FF500EEDCC8 /* TasksRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C969A432D638FF500EEDCC8 /* TasksRepository.swift */; };
 		5C969A492D65B50E00EEDCC8 /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C969A482D65B50E00EEDCC8 /* NetworkService.swift */; };
 		5C969A4C2D66315800EEDCC8 /* TasksRequestDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5C969A4B2D66315800EEDCC8 /* TasksRequestDTO.swift */; };
@@ -47,6 +51,10 @@
 
 /* Begin PBXFileReference section */
 		5C5F399F2D687F460097D80A /* CoreDataService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		5C5F39A12D68B0B00097D80A /* TaskDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailViewController.swift; sourceTree = "<group>"; };
+		5C5F39A32D68B1AA0097D80A /* TaskDetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailPresenter.swift; sourceTree = "<group>"; };
+		5C5F39A52D68B32C0097D80A /* TaskDetailInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailInteractor.swift; sourceTree = "<group>"; };
+		5C5F39A92D68C3EE0097D80A /* TaskDetailRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailRouter.swift; sourceTree = "<group>"; };
 		5C969A432D638FF500EEDCC8 /* TasksRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksRepository.swift; sourceTree = "<group>"; };
 		5C969A482D65B50E00EEDCC8 /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
 		5C969A4B2D66315800EEDCC8 /* TasksRequestDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TasksRequestDTO.swift; sourceTree = "<group>"; };
@@ -180,6 +188,10 @@
 		5C969A462D63902100EEDCC8 /* TaskDetail */ = {
 			isa = PBXGroup;
 			children = (
+				5C5F39A12D68B0B00097D80A /* TaskDetailViewController.swift */,
+				5C5F39A32D68B1AA0097D80A /* TaskDetailPresenter.swift */,
+				5C5F39A52D68B32C0097D80A /* TaskDetailInteractor.swift */,
+				5C5F39A92D68C3EE0097D80A /* TaskDetailRouter.swift */,
 			);
 			path = TaskDetail;
 			sourceTree = "<group>";
@@ -385,13 +397,17 @@
 			files = (
 				5C5F39A02D687F460097D80A /* CoreDataService.swift in Sources */,
 				5C969A492D65B50E00EEDCC8 /* NetworkService.swift in Sources */,
+				5C5F39A62D68B32C0097D80A /* TaskDetailInteractor.swift in Sources */,
+				5C5F39A42D68B1AA0097D80A /* TaskDetailPresenter.swift in Sources */,
 				5CF2F4C62D6350E100E67C13 /* TaskListViewController.swift in Sources */,
 				5CF2F4CF2D63641100E67C13 /* TaskTableViewCell.swift in Sources */,
 				5C969A4E2D66319300EEDCC8 /* TasksResponseDTO.swift in Sources */,
 				5CF2F4CB2D63522200E67C13 /* TaskListPresenter.swift in Sources */,
 				5CF2F48A2D634F7200E67C13 /* AppDelegate.swift in Sources */,
+				5C5F39AA2D68C3EE0097D80A /* TaskDetailRouter.swift in Sources */,
 				5C969A442D638FF500EEDCC8 /* TasksRepository.swift in Sources */,
 				5CF2F4CD2D6352BC00E67C13 /* TaskListRouter.swift in Sources */,
+				5C5F39A22D68B0B00097D80A /* TaskDetailViewController.swift in Sources */,
 				5CF2F48C2D634F7200E67C13 /* SceneDelegate.swift in Sources */,
 				5CF2F4C82D63518D00E67C13 /* TaskListInteractor.swift in Sources */,
 				5CF2F4C42D63505B00E67C13 /* Task.swift in Sources */,
