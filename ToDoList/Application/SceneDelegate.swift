@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
 
-        let taskListViewController = TaskListRouterImplementation.createTaskListModule()
+        let taskListViewController = TaskListRouter.createTaskListModule()
         let navigationController = UINavigationController(rootViewController: taskListViewController)
         navigationController.navigationBar.prefersLargeTitles = true
         window?.tintColor = .systemYellow

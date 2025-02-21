@@ -7,17 +7,17 @@
 
 import Foundation
 import UIKit
-protocol TaskListRouter {
+protocol TaskListRouterProtocol {
 }
 
-final class TaskListRouterImplementation: TaskListRouter {
+final class TaskListRouter: TaskListRouterProtocol {
     weak var viewController: UIViewController?
     
     static func createTaskListModule() -> TaskListViewController {
         let repo = TasksRepository()
         let interactor = TaskListInteractor(repo: repo)
-        let router = TaskListRouterImplementation()
-        let presenter = TaskListPresenterImplementation(interactor: interactor, router: router)
+        let router = TaskListRouter()
+        let presenter = TaskListPresenter(interactor: interactor, router: router)
         let view = TaskListViewController(presenter: presenter)
 
         router.viewController = view
@@ -25,5 +25,11 @@ final class TaskListRouterImplementation: TaskListRouter {
         interactor.output = presenter
         
         return view
+    }
+    
+    static func pushToTaskDetailScreen(navigationController: UINavigationController, task: Task) {
+        let taskDetailModule = TaskDetailRouter.createTaskDetailModule()
+        taskDetailModule.show(task: task)
+        navigationController.pushViewController(taskDetailModule, animated: true)
     }
 }

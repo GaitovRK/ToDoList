@@ -6,19 +6,20 @@
 //
 
 import Foundation
+import UIKit
 
-protocol TaskListPresenter: AnyObject {
+protocol TaskListPresenterProtocol: AnyObject {
     func viewDidLoad(view: TaskListView)
 }
 
 
-final class TaskListPresenterImplementation: TaskListPresenter {
+final class TaskListPresenter: TaskListPresenterProtocol {
     
     weak var view: TaskListViewController?
     var interactor: TaskListInteractorInput
-    var router: TaskListRouter
+    var router: TaskListRouterProtocol
     
-    init(interactor: TaskListInteractorInput, router: TaskListRouter) {
+    init(interactor: TaskListInteractorInput, router: TaskListRouterProtocol) {
         self.interactor = interactor
         self.router = router
     }
@@ -27,9 +28,13 @@ final class TaskListPresenterImplementation: TaskListPresenter {
         interactor.fetchTaskList()
         print("Presenter viewDidLoad")
     }
+    
+    func showTaskDetailView(navigationController: UINavigationController, task: Task) {
+        TaskListRouter.pushToTaskDetailScreen(navigationController: navigationController, task: task)
+    }
 }
 
-extension TaskListPresenterImplementation: TaskListInteractorOutput {
+extension TaskListPresenter: TaskListInteractorOutput {
     func fetchTasksSuccess(tasks: [Task]) {
         view?.show(tasks: tasks)
     }

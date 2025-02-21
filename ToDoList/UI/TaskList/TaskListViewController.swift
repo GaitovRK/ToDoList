@@ -85,12 +85,15 @@ final class TaskListViewController: UIViewController, TaskListView, UISearchResu
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        let taskIndex = searchController.isActive ? tasks.firstIndex(where: { $0.id == filteredTasks[indexPath.row].id }) : indexPath.row
-        if let taskIndex = taskIndex {
-            tasks[taskIndex].isCompleted.toggle()
-            tableView.reloadRows(at: [indexPath], with: .automatic)
-        }
+//        tableView.deselectRow(at: indexPath, animated: true)
+//        let taskIndex = searchController.isActive ? tasks.firstIndex(where: { $0.id == filteredTasks[indexPath.row].id }) : indexPath.row
+//        if let taskIndex = taskIndex {
+//            tasks[taskIndex].isCompleted.toggle()
+//            tableView.reloadRows(at: [indexPath], with: .automatic)
+//        }
+        
+        let task = searchController.isActive ? filteredTasks[indexPath.row] : tasks[indexPath.row]
+        presenter.showTaskDetailView(navigationController: navigationController!, task: task)
     }
 }
 

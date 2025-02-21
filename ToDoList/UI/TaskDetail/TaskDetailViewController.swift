@@ -14,7 +14,7 @@ protocol TaskDetailView {
 
 final class TaskDetailViewController: UIViewController, TaskDetailView {
     
-    private var task: Task = Task(id: 1, title: "Заняться спортом", description: "Составить список необходимых продуктов для ужина. Не забыть проверить, что уже есть в холодильнике.", creationDate: Date(), isCompleted: false)
+    private var task = Task(id: 1, title: "Заняться спортом ", description: "Составить список необходимых продуктов для ужина. Не забыть проверить, что уже есть в холодильнике.", creationDate: Date(), isCompleted: false)
     private var presenter: TaskDetailPresenter
     
     private var titleTextView = UITextView()
@@ -69,7 +69,7 @@ final class TaskDetailViewController: UIViewController, TaskDetailView {
         view.addSubview(descriptionTextView)
         
         NSLayoutConstraint.activate([
-            titleTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
+            titleTextView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
             titleTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             titleTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
