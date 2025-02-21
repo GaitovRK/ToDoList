@@ -36,7 +36,6 @@ class TaskTableViewCell: UITableViewCell {
         var config = UIButton.Configuration.plain()
         config.baseForegroundColor = .systemYellow
         config.baseBackgroundColor = .clear
-        // config.preferredSymbolConfigurationForImage = UIImage.SymbolConfiguration(pointSize: 24)
         checkboxButton.configuration = config
         checkboxButton.addTarget(self, action: #selector(toggleCheckbox), for: .touchUpInside)
 
@@ -87,7 +86,9 @@ class TaskTableViewCell: UITableViewCell {
             titleLabel.attributedText = attributedString
         } else {
             titleLabel.textColor = .white
-            titleLabel.attributedText = NSAttributedString(string: task.title)
+            descriptionLabel.textColor = .white
+            titleLabel.attributedText = nil
+            titleLabel.text = task.title
         }
     }
     
@@ -97,7 +98,9 @@ class TaskTableViewCell: UITableViewCell {
             titleLabel.attributedText = nil
             titleLabel.textColor = .white
             descriptionLabel.text = nil
-            descriptionLabel.textColor = .black
+            descriptionLabel.textColor = .white
             checkboxButton.isSelected = false
+            checkboxButton.setImage(UIImage(systemName: "circle"), for: .normal)
+            dateLabel.text = nil
         }
 }
