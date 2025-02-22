@@ -34,11 +34,15 @@ final class CoreDataService {
     }
 
     func updateEntity<T: NSManagedObject>(_ entity: T, withData data: [String: Any]) {
-        
+        for (key, value) in data {
+        entity.setValue(value, forKey: key)
+        }
+        saveContext()
     }
 
     func deleteEntity<T: NSManagedObject>(_ entity: T) {
-
+        context.delete(entity)
+        saveContext()
     }
     
     private func saveContext() {
