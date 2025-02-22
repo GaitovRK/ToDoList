@@ -103,4 +103,8 @@ class TaskTableViewCell: UITableViewCell {
             checkboxButton.setImage(UIImage(systemName: "circle"), for: .normal)
             dateLabel.text = nil
         }
+    
+    func checkmarkPressed() {
+        
+    }
 }
