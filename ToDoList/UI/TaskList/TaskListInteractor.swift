@@ -10,8 +10,8 @@ import Foundation
 protocol TaskListInteractorInput {
     func fetchTaskList()
     func addTask(title: String, description: String)
-    func editTask(at index: Int, title: String, description: String)
-    func deleteTask(at index: Int)
+    func editTask(task: Task)
+    func deleteTask(id: Int)
     func searchTasks(with query: String) -> [Task]
     func getAllTasks() -> [Task]
 }
@@ -32,6 +32,10 @@ class TaskListInteractor: TaskListInteractorInput {
     
     func fetchTaskList() {
         repo?.fetchTasks(completion: { tasks in
+            print("Tasks fetched interactor")
+
+            print(tasks)
+            
             self.output?.fetchTasksSuccess(tasks: tasks)
         })
     }
@@ -40,12 +44,12 @@ class TaskListInteractor: TaskListInteractorInput {
         
     }
     
-    func editTask(at index: Int, title: String, description: String) {
-        
+    func editTask(task: Task) {
+        repo?.editTask(task: task)
     }
     
-    func deleteTask(at index: Int) {
-        
+    func deleteTask(id: Int) {
+        repo?.deleteTask(id: id)
     }
     
     func searchTasks(with query: String) -> [Task] {

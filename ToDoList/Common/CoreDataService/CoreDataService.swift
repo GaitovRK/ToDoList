@@ -21,19 +21,28 @@ final class CoreDataService {
         saveContext()
     }
 
-    func fetchEntities<T: NSManagedObject>(ofType type: T.Type, withPredicate predicate: NSPredicate? = nil) -> [T] {
+    func fetchEntities<T: NSManagedObject>(
+        ofType type: T.Type,
+        withPredicate predicate: NSPredicate? = nil,
+        completion: @escaping ([T]) -> Void
+    ){
         let fetchRequest = NSFetchRequest<T>(entityName: String(describing: type))
         fetchRequest.predicate = predicate
         
         do {
-            return try context.fetch(fetchRequest)
+            let data = try context.fetch(fetchRequest)
+            DispatchQueue.main.async {
+                completion(data)
+            }
         } catch {
             print("Failed to fetch entities: \(error)")
-            return []
+            completion([])
         }
     }
 
-    func updateEntity<T: NSManagedObject>(_ entity: T, withData data: [String: Any]) {
+    func updateEntity<T: NSManagedObject>(_ type: T.Type, withData data: [String: Any]) {
+        print("Updating entity")
+        let entity = T(context: context)
         for (key, value) in data {
         entity.setValue(value, forKey: key)
         }
@@ -41,6 +50,7 @@ final class CoreDataService {
     }
 
     func deleteEntity<T: NSManagedObject>(_ entity: T) {
+        print("Deleting entity")
         context.delete(entity)
         saveContext()
     }

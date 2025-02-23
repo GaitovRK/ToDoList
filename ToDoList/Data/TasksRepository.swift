@@ -10,12 +10,9 @@ import Foundation
 
 protocol TasksRepositoryProtocol {
     func fetchTasks(completion: @escaping ([Task]) -> Void)
-    
-//    func searchTasks(query: String, completion: @escaping ([Task]) -> Void)
-    
     func createTask()
-    func editTask()
-    func deleteTask()
+    func editTask(task: Task)
+    func deleteTask(id: Int)
 }
 
 final class TasksRepository: TasksRepositoryProtocol {
@@ -26,10 +23,10 @@ final class TasksRepository: TasksRepositoryProtocol {
     
     func fetchTasks(completion: @escaping ([Task]) -> Void) {
         //1. Check if it is the first launch
-        let didLaunchBefore = UserDefaults.standard.bool(forKey: "isFirstLaunch")
+        let didLaunchBefore = UserDefaults.standard.bool(forKey: "didLaunchBefore")
         
         if (!didLaunchBefore) {
-            print("1 launch")
+            UserDefaults.standard.set(true, forKey: "didLaunchBefore")
             networkService.get(path: nil) { [weak self] tasks in
                 guard let self = self else { return }
                 
@@ -44,40 +41,46 @@ final class TasksRepository: TasksRepositoryProtocol {
                     ]
                     self.coreDataService.addEntity(ofType: TaskCoreData.self, withData: taskData)
                 }
+                print("First: \(tasks)")
                 
                 //3. Return tasks
                 completion(tasks)
             }
         } else {
-            print("2+ launch")
-            let tasksData = self.coreDataService.fetchEntities(ofType: TaskCoreData.self)
-            var tasks: [Task]
-            
-            tasks = tasksData.map({ task in
-                Task(coreDataTask: task)
-            })
-            
-            completion(tasks)
-            UserDefaults.standard.set(false, forKey: "didLaunchBefore")
+            self.coreDataService.fetchEntities(ofType: TaskCoreData.self) { taskData in
+                let tasks = taskData.map({ task in
+                    Task(coreDataTask: task)
+                })
+                print("Second: \(tasks)")
+                completion(tasks)
+            }
         }
-        
-        
     }
-    
-//    func searchTasks(query: String, completion: @escaping ([Task]) -> Void) {
-//        
-//    }
     
     func createTask() {
         
     }
     
-    func editTask() {
-        
+    func editTask(task: Task) {
+        let taskData: [String: Any] = [
+            "id": task.id,
+            "title": task.title,
+//            "isCompleted": task.isCompleted,
+            "creationDate": task.creationDate,
+            "taskDescription": task.description,
+        ]
+        coreDataService.updateEntity(TaskCoreData.self, withData: taskData)
     }
     
-    func deleteTask() {
-        
+    func deleteTask(id: Int) {
+    let predicate = NSPredicate(format: "id == %d", id)
+    coreDataService.fetchEntities(ofType: TaskCoreData.self, withPredicate: predicate) { tasks in
+        if let task = tasks.first {
+            self.coreDataService.deleteEntity(task)
+            print("Deleted task with id: \(id)")
+        } else {
+            print("No task found with id: \(id)")
+        }
     }
-
+}
 }

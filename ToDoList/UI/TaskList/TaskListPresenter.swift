@@ -32,10 +32,19 @@ final class TaskListPresenter: TaskListPresenterProtocol {
     func showTaskDetailView(navigationController: UINavigationController, task: Task) {
         TaskListRouter.pushToTaskDetailScreen(navigationController: navigationController, task: task)
     }
+    
+    func deleteTask(id: Int) {
+        interactor.deleteTask(id: id)
+    }
+    
+    func editTask(task: Task) {
+        interactor.editTask(task: task)
+    }
 }
 
 extension TaskListPresenter: TaskListInteractorOutput {
     func fetchTasksSuccess(tasks: [Task]) {
+        print("Fetch tasks success")
         view?.show(tasks: tasks)
     }
     

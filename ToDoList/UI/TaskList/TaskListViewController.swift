@@ -43,6 +43,7 @@ final class TaskListViewController: UIViewController, TaskListView, UISearchResu
     }
     
     func show(tasks: [Task]) {
+        print("Show tasks: \(tasks)")
         self.tasks = tasks
         self.tableView.reloadData()
         numberOfTasksLabel.text = "\(getNumberOfTasks()) Задач"
@@ -139,29 +140,60 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
         }
         let task = searchController.isActive ? filteredTasks[indexPath.row] : tasks[indexPath.row]
         cell.configure(with: task)
+        cell.delegate = self
+        cell.selectionStyle = .none
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-//        let taskIndex = searchController.isActive ? tasks.firstIndex(where: { $0.id == filteredTasks[indexPath.row].id }) : indexPath.row
-//        if let taskIndex = taskIndex {
-//            tasks[taskIndex].isCompleted.toggle()
-//            tableView.reloadRows(at: [indexPath], with: .automatic)
-//        }
-        
-        let task = searchController.isActive ? filteredTasks[indexPath.row] : tasks[indexPath.row]
-        presenter.showTaskDetailView(navigationController: navigationController!, task: task)
+        deleteTask(at: indexPath.row)
+        tableView.reloadData()
     }
     
     func getNumberOfTasks() -> Int{
         return searchController.isActive ? filteredTasks.count : tasks.count
+    }
+    
+    func updateTask(task: Task) {
+        presenter.editTask(task: task)
+        tableView.reloadData()
+    }
+    
+    func deleteTask(at index: Int) {
+        let id = convertIndexToID(index: index)
+
+        if searchController.isActive {
+            let indexPath = IndexPath(row: index, section: 0)
+            filteredTasks.remove(at: index)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        } else {
+            let indexPath = IndexPath(row: index, section: 0)
+            tasks.remove(at: index)
+            tableView.deleteRows(at: [indexPath], with: .left)
+        }
+        
+        presenter.deleteTask(id: id)
+        tableView.reloadData()
+    }
+    
+    func convertIndexToID(index: Int) -> Int {
+        let task = searchController.isActive ? filteredTasks[index] : tasks[index]
+        let id = task.id
+        return id
     }
 }
 
 extension TaskListViewController: UISearchBarDelegate {
     func searchBarBookmarkButtonClicked(_ searchBar: UISearchBar) {
         print("Microphone button tapped")
+    }
+}
+
+extension TaskListViewController: TaskTableViewCellDelegate {
+    func didTapTitleButton(in cell: TaskTableViewCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let task = searchController.isActive ? filteredTasks[indexPath.row] : tasks[indexPath.row]
+        // Call your function here
     }
 }
 
