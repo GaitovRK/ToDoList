@@ -1,10 +1,16 @@
 import UIKit
 
+protocol TaskTableViewCellDelegate: AnyObject {
+    func didTapTitleButton(in cell: TaskTableViewCell)
+}
+
 class TaskTableViewCell: UITableViewCell {
-    private let titleLabel = UILabel()
+    weak var delegate: TaskTableViewCellDelegate?
+    private let titleButton = UIButton(type: .system)
     private let descriptionLabel = UILabel()
     private let checkboxButton = UIButton(type: .system)
     private let dateLabel = UILabel()
+    private var task: Task?
 
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
@@ -16,27 +22,29 @@ class TaskTableViewCell: UITableViewCell {
     }
 
     private func setupViews() {
-        addSubview(titleLabel)
+        addSubview(titleButton)
         addSubview(descriptionLabel)
         addSubview(checkboxButton)
         addSubview(dateLabel)
 
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
+        titleButton.translatesAutoresizingMaskIntoConstraints = false
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         checkboxButton.translatesAutoresizingMaskIntoConstraints = false
         dateLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        titleLabel.font = UIFont.systemFont(ofSize: 16, weight: .bold)
+        titleButton.titleLabel?.font = UIFont.systemFont(ofSize: 16, weight: .bold)
         descriptionLabel.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         dateLabel.font = UIFont.systemFont(ofSize: 12)
 
-        titleLabel.numberOfLines = 2
-        descriptionLabel.numberOfLines = 2
+        titleButton.setTitleColor(.white, for: .normal)
+        titleButton.contentHorizontalAlignment = .left
+        titleButton.addTarget(self, action: #selector(titleButtonTapped), for: .touchUpInside)
 
         var config = UIButton.Configuration.plain()
         config.baseForegroundColor = .systemYellow
         config.baseBackgroundColor = .clear
         checkboxButton.configuration = config
+        checkboxButton.isUserInteractionEnabled = true
         checkboxButton.addTarget(self, action: #selector(toggleCheckbox), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
@@ -45,11 +53,11 @@ class TaskTableViewCell: UITableViewCell {
             checkboxButton.widthAnchor.constraint(equalToConstant: 24),
             checkboxButton.heightAnchor.constraint(equalToConstant: 24),
 
-            titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 12),
-            titleLabel.leadingAnchor.constraint(equalTo: checkboxButton.trailingAnchor, constant: 8),
-            titleLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+            titleButton.topAnchor.constraint(equalTo: topAnchor, constant: 12),
+            titleButton.leadingAnchor.constraint(equalTo: checkboxButton.trailingAnchor, constant: 8),
+            titleButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
-            descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 6),
+            descriptionLabel.topAnchor.constraint(equalTo: titleButton.bottomAnchor, constant: 6),
             descriptionLabel.leadingAnchor.constraint(equalTo: checkboxButton.trailingAnchor, constant: 8),
             descriptionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
 
@@ -58,14 +66,24 @@ class TaskTableViewCell: UITableViewCell {
             dateLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             dateLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20)
         ])
+
+        titleButton.bringSubviewToFront(self)
     }
 
     @objc private func toggleCheckbox() {
-        checkboxButton.isSelected.toggle()
+        guard var task = task else { return }
+        task.isCompleted.toggle()
+        configure(with: task)
+    }
+
+    @objc private func titleButtonTapped() {
+        print("Title button tapped")
+        delegate?.didTapTitleButton(in: self)
     }
 
     func configure(with task: Task) {
-        titleLabel.text = task.title
+        self.task = task
+        titleButton.setTitle(task.title, for: .normal)
         descriptionLabel.text = task.description
         checkboxButton.isSelected = task.isCompleted
         
@@ -78,25 +96,24 @@ class TaskTableViewCell: UITableViewCell {
         dateLabel.textColor = .gray
 
         if task.isCompleted {
-            titleLabel.textColor = .gray
+            titleButton.setTitleColor(.gray, for: .normal)
             descriptionLabel.textColor = .gray
             let attributedString = NSAttributedString(string: task.title, attributes: [
                 .strikethroughStyle: NSUnderlineStyle.single.rawValue
             ])
-            titleLabel.attributedText = attributedString
+            titleButton.setAttributedTitle(attributedString, for: .normal)
         } else {
-            titleLabel.textColor = .white
+            titleButton.setTitleColor(.white, for: .normal)
             descriptionLabel.textColor = .white
-            titleLabel.attributedText = nil
-            titleLabel.text = task.title
+            titleButton.setAttributedTitle(nil, for: .normal)
         }
     }
     
     override func prepareForReuse() {
             super.prepareForReuse()
-            titleLabel.text = nil
-            titleLabel.attributedText = nil
-            titleLabel.textColor = .white
+            titleButton.setTitle(nil, for: .normal)
+            titleButton.setAttributedTitle(nil, for: .normal)
+            titleButton.setTitleColor(.white, for: .normal)
             descriptionLabel.text = nil
             descriptionLabel.textColor = .white
             checkboxButton.isSelected = false
@@ -105,6 +122,10 @@ class TaskTableViewCell: UITableViewCell {
         }
     
     func checkmarkPressed() {
-        
+        print("Checkmark pressed")
+    }
+    
+    func titlePressed() {
+        print("Title pressed")
     }
 }
