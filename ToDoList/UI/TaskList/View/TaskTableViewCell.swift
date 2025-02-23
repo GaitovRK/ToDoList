@@ -111,8 +111,10 @@ class TaskTableViewCell: UITableViewCell {
             titleButton.setTitle(nil, for: .normal)
             titleButton.setAttributedTitle(nil, for: .normal)
             titleButton.setTitleColor(.white, for: .normal)
+        
             descriptionLabel.text = nil
             descriptionLabel.textColor = .white
+        
             checkboxButton.isSelected = false
             checkboxButton.setImage(UIImage(systemName: "circle"), for: .normal)
             dateLabel.text = nil

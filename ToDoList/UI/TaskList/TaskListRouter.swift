@@ -31,7 +31,7 @@ final class TaskListRouter: TaskListRouterProtocol {
     static func pushToTaskDetailScreen(navigationController: UINavigationController, task: Task) {
         let taskDetailModule = TaskDetailRouter.createTaskDetailModule()
         taskDetailModule.show(task: task)
-        navigationController.pushViewController(taskDetailModule, animated: true)
+        navigationController.pushViewController(taskDetailModule, animated: false)
     }
     
     func presentShareSheet(with items: [Any]) {

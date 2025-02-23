@@ -37,24 +37,22 @@ final class TaskListViewController: UIViewController, TaskListView {
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad(view: self)
- 
         title = "Задачи"
-        self.tasks.sort { $0.id > $1.id }
-        tableView.reloadData()
-        numberOfTasksLabel.text = "\(getNumberOfTasks()) Задач"
     }
     
     override func viewDidAppear(_ animated: Bool) {
         presenter.viewDidLoad(view: self)
-        self.tasks.sort { $0.id > $1.id }
-        tableView.reloadData()
-        numberOfTasksLabel.text = "\(getNumberOfTasks()) Задач"
+        updateUI()
     }
     
     func show(tasks: [Task]) {
         self.tasks = tasks
+        updateUI()
+    }
+    
+    private func updateUI() {
         self.tasks.sort { $0.id > $1.id }
-        self.tableView.reloadData()
+        tableView.reloadData()
         numberOfTasksLabel.text = "\(getNumberOfTasks()) Задач"
     }
 
