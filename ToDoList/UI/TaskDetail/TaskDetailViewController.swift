@@ -10,6 +10,7 @@ import UIKit
 
 protocol TaskDetailView {
     func show(task: Task)
+    func displayUpdatedTask(_ task: Task)
 }
 
 final class TaskDetailViewController: UIViewController, TaskDetailView {
@@ -39,6 +40,15 @@ final class TaskDetailViewController: UIViewController, TaskDetailView {
         setUpView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        presenter.editTask(task: task)
+    }
+    
+    func displayUpdatedTask(_ task: Task) {
+        
+    }
+    
     private func setUpView() {
         
         titleTextView.text = task.title
@@ -48,6 +58,7 @@ final class TaskDetailViewController: UIViewController, TaskDetailView {
         titleTextView.translatesAutoresizingMaskIntoConstraints = false
         titleTextView.textContainerInset = .zero
         titleTextView.textContainer.lineFragmentPadding = 0
+        titleTextView.delegate = self
         view.addSubview(titleTextView)
         
         // Configure date label
@@ -66,6 +77,7 @@ final class TaskDetailViewController: UIViewController, TaskDetailView {
         descriptionTextView.textContainerInset = UIEdgeInsets.zero
         descriptionTextView.textContainer.lineFragmentPadding = 0
         descriptionTextView.translatesAutoresizingMaskIntoConstraints = false
+        descriptionTextView.delegate = self
         view.addSubview(descriptionTextView)
         
         NSLayoutConstraint.activate([
@@ -81,5 +93,17 @@ final class TaskDetailViewController: UIViewController, TaskDetailView {
             descriptionTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             descriptionTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
         ])
+    }
+}
+
+extension TaskDetailViewController: UITextViewDelegate {
+    func textViewDidChange(_ textView: UITextView) {
+        if textView == titleTextView {
+            task.title = textView.text
+        }
+        
+        if textView == descriptionTextView {
+            task.description = textView.text
+        }
     }
 }

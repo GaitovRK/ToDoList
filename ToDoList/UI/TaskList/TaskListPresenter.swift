@@ -37,8 +37,8 @@ final class TaskListPresenter: TaskListPresenterProtocol {
         interactor.deleteTask(id: id)
     }
     
-    func editTask(task: Task) {
-        interactor.editTask(task: task)
+    func editTask(id: Int) {
+        
     }
 }
 

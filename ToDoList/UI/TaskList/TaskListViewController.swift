@@ -42,6 +42,11 @@ final class TaskListViewController: UIViewController, TaskListView, UISearchResu
         tableView.reloadData()
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        presenter.viewDidLoad(view: self)
+        tableView.reloadData()
+    }
+    
     func show(tasks: [Task]) {
         print("Show tasks: \(tasks)")
         self.tasks = tasks
@@ -146,16 +151,28 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        deleteTask(at: indexPath.row)
-        tableView.reloadData()
+        let task = searchController.isActive ? filteredTasks[indexPath.row] : tasks[indexPath.row]
+        presenter.showTaskDetailView(navigationController: navigationController!, task: task)
     }
     
     func getNumberOfTasks() -> Int{
         return searchController.isActive ? filteredTasks.count : tasks.count
     }
     
-    func updateTask(task: Task) {
-        presenter.editTask(task: task)
+    func updateTask(index: Int) {
+        let id = convertIndexToID(index: index)
+        let indexPath = IndexPath(row: index, section: 0)
+
+        if searchController.isActive {
+            let indexPath = IndexPath(row: index, section: 0)
+            filteredTasks.remove(at: index)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        } else {
+            let indexPath = IndexPath(row: index, section: 0)
+            tasks.remove(at: index)
+            tableView.deleteRows(at: [indexPath], with: .left)
+        }
+        
         tableView.reloadData()
     }
     

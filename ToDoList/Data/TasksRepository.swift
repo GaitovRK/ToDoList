@@ -65,11 +65,12 @@ final class TasksRepository: TasksRepositoryProtocol {
         let taskData: [String: Any] = [
             "id": task.id,
             "title": task.title,
-//            "isCompleted": task.isCompleted,
+            "isCompleted": task.isCompleted,
             "creationDate": task.creationDate,
             "taskDescription": task.description,
         ]
-        coreDataService.updateEntity(TaskCoreData.self, withData: taskData)
+        let predicate = NSPredicate(format: "id == %d", task.id)
+        coreDataService.updateEntity(TaskCoreData.self, withPredicate: predicate, withData: taskData)
     }
     
     func deleteTask(id: Int) {

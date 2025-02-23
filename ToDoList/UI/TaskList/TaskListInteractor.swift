@@ -32,10 +32,6 @@ class TaskListInteractor: TaskListInteractorInput {
     
     func fetchTaskList() {
         repo?.fetchTasks(completion: { tasks in
-            print("Tasks fetched interactor")
-
-            print(tasks)
-            
             self.output?.fetchTasksSuccess(tasks: tasks)
         })
     }

@@ -40,17 +40,30 @@ final class CoreDataService {
         }
     }
 
-    func updateEntity<T: NSManagedObject>(_ type: T.Type, withData data: [String: Any]) {
-        print("Updating entity")
-        let entity = T(context: context)
-        for (key, value) in data {
-        entity.setValue(value, forKey: key)
-        }
-        saveContext()
+    func updateEntity<T: NSManagedObject>(
+        _ type: T.Type,
+        withPredicate predicate: NSPredicate? = nil,
+        withData data: [String: Any]
+    ) {
+        let fetchRequest = NSFetchRequest<T>(entityName: String(describing: type))
+            fetchRequest.predicate = predicate
+
+            do {
+                let results = try context.fetch(fetchRequest)
+                if let entityToUpdate = results.first {
+                    for (key, value) in data {
+                        entityToUpdate.setValue(value, forKey: key)
+                    }
+                    saveContext()
+                } else {
+                    print("No entity found with the identifier ")
+                }
+            } catch {
+                print("Failed to fetch entity: \(error)")
+            }
     }
 
     func deleteEntity<T: NSManagedObject>(_ entity: T) {
-        print("Deleting entity")
         context.delete(entity)
         saveContext()
     }
