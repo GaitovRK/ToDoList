@@ -9,8 +9,9 @@ import Foundation
 
 protocol TaskListInteractorInput {
     func fetchTaskList()
-    func addTask(title: String, description: String)
-    func editTask(task: Task)
+//    func saveTask(task: Task)
+//    func addTask(title: String, description: String)
+//    func editTask(task: Task)
     func deleteTask(id: Int)
     func searchTasks(with query: String) -> [Task]
     func getAllTasks() -> [Task]
@@ -36,13 +37,17 @@ class TaskListInteractor: TaskListInteractorInput {
         })
     }
     
-    func addTask(title: String, description: String) {
-        
-    }
+//    func addTask(title: String, description: String) {
+//        
+//    }
     
-    func editTask(task: Task) {
-        repo?.editTask(task: task)
-    }
+//    func saveTask(task: Task) {
+//        
+//    }
+    
+//    func editTask(task: Task) {
+//        repo?.editTask(task: task)
+//    }
     
     func deleteTask(id: Int) {
         repo?.deleteTask(id: id)

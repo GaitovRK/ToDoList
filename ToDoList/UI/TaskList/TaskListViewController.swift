@@ -12,7 +12,7 @@ protocol TaskListView: AnyObject {
     func show(tasks: [Task])
 }
 
-final class TaskListViewController: UIViewController, TaskListView, UISearchResultsUpdating {
+final class TaskListViewController: UIViewController, TaskListView {
     
     var presenter: TaskListPresenter
     private let tableView = UITableView()
@@ -39,17 +39,21 @@ final class TaskListViewController: UIViewController, TaskListView, UISearchResu
         presenter.viewDidLoad(view: self)
  
         title = "Задачи"
+        self.tasks.sort { $0.id > $1.id }
         tableView.reloadData()
+        numberOfTasksLabel.text = "\(getNumberOfTasks()) Задач"
     }
     
     override func viewDidAppear(_ animated: Bool) {
         presenter.viewDidLoad(view: self)
+        self.tasks.sort { $0.id > $1.id }
         tableView.reloadData()
+        numberOfTasksLabel.text = "\(getNumberOfTasks()) Задач"
     }
     
     func show(tasks: [Task]) {
-        print("Show tasks: \(tasks)")
         self.tasks = tasks
+        self.tasks.sort { $0.id > $1.id }
         self.tableView.reloadData()
         numberOfTasksLabel.text = "\(getNumberOfTasks()) Задач"
     }
@@ -71,18 +75,9 @@ final class TaskListViewController: UIViewController, TaskListView, UISearchResu
         definesPresentationContext = true
     }
 
-    // MARK: - UISearchResultsUpdating
-    func updateSearchResults(for searchController: UISearchController) {
-        let searchText = searchController.searchBar.text ?? ""
-        filteredTasks = tasks.filter { task in
-            task.title.lowercased().contains(searchText.lowercased()) ||
-            task.description.lowercased().contains(searchText.lowercased())
-        }
-        tableView.reloadData()
-    }
     
     func setupBottomBar() {
-        bottomBar.backgroundColor = .secondarySystemBackground // Set a background color for visibility
+        bottomBar.backgroundColor = .secondarySystemBackground
         bottomBar.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(bottomBar)
 
@@ -113,11 +108,36 @@ final class TaskListViewController: UIViewController, TaskListView, UISearchResu
     }
     
     @objc func addTaskButtonTapped() {
-        let uniqueID = (tasks.last?.id ?? 0) + 1
+        let uniqueID = (tasks.first?.id ?? 0) + 1
         let task = Task(id: uniqueID, title: "Новая Задача", description: "", creationDate: Date(), isCompleted: false)
         presenter.showTaskDetailView(navigationController: navigationController!, task: task)
     }
+    
+    func getNumberOfTasks() -> Int{
+        return searchController.isActive ? filteredTasks.count : tasks.count
+    }
+    
+    func deleteTask(at index: Int) {
+        let id = convertIndexToID(index: index)
 
+        if searchController.isActive {
+            let indexPath = IndexPath(row: index, section: 0)
+            filteredTasks.remove(at: index)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        } else {
+            let indexPath = IndexPath(row: index, section: 0)
+            tasks.remove(at: index)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+        
+        presenter.deleteTask(id: id)
+    }
+    
+    func convertIndexToID(index: Int) -> Int {
+        let task = searchController.isActive ? filteredTasks[index] : tasks[index]
+        let id = task.id
+        return id
+    }
 }
 
 extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
@@ -147,6 +167,8 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
         cell.configure(with: task)
         cell.delegate = self
         cell.selectionStyle = .none
+        let interaction = UIContextMenuInteraction(delegate: self)
+        cell.addInteraction(interaction)
         return cell
     }
     
@@ -154,49 +176,16 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
         let task = searchController.isActive ? filteredTasks[indexPath.row] : tasks[indexPath.row]
         presenter.showTaskDetailView(navigationController: navigationController!, task: task)
     }
-    
-    func getNumberOfTasks() -> Int{
-        return searchController.isActive ? filteredTasks.count : tasks.count
-    }
-    
-    func updateTask(index: Int) {
-        let id = convertIndexToID(index: index)
-        let indexPath = IndexPath(row: index, section: 0)
+}
 
-        if searchController.isActive {
-            let indexPath = IndexPath(row: index, section: 0)
-            filteredTasks.remove(at: index)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        } else {
-            let indexPath = IndexPath(row: index, section: 0)
-            tasks.remove(at: index)
-            tableView.deleteRows(at: [indexPath], with: .left)
+extension TaskListViewController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        let searchText = searchController.searchBar.text ?? ""
+        filteredTasks = tasks.filter { task in
+            task.title.lowercased().contains(searchText.lowercased()) ||
+            task.description.lowercased().contains(searchText.lowercased())
         }
-        
         tableView.reloadData()
-    }
-    
-    func deleteTask(at index: Int) {
-        let id = convertIndexToID(index: index)
-
-        if searchController.isActive {
-            let indexPath = IndexPath(row: index, section: 0)
-            filteredTasks.remove(at: index)
-            tableView.deleteRows(at: [indexPath], with: .automatic)
-        } else {
-            let indexPath = IndexPath(row: index, section: 0)
-            tasks.remove(at: index)
-            tableView.deleteRows(at: [indexPath], with: .left)
-        }
-        
-        presenter.deleteTask(id: id)
-        tableView.reloadData()
-    }
-    
-    func convertIndexToID(index: Int) -> Int {
-        let task = searchController.isActive ? filteredTasks[index] : tasks[index]
-        let id = task.id
-        return id
     }
 }
 
@@ -214,15 +203,31 @@ extension TaskListViewController: TaskTableViewCellDelegate {
     }
 }
 
-//extension TaskListViewController: TaskListInteractorOutput {
-//    func fetchTasksSuccess(tasks: [Task]) {
-//        self.tasks = tasks
-//        self.tableView.reloadData()
-//    }
-//    
-//    func fetchTasksFailure(error: Error) {
-//        let alert = UIAlertController(title: "Alert", message: "Problem Fetching Tasks", preferredStyle: .alert)
-//        alert.addAction(UIAlertAction(title: "Okay", style: .default, handler: nil))
-//        self.present(alert, animated: true, completion: nil)
-//    }
-//}
+extension TaskListViewController: UIContextMenuInteractionDelegate {
+    func contextMenuInteraction(_ interaction: UIContextMenuInteraction, configurationForMenuAtLocation location: CGPoint) -> UIContextMenuConfiguration? {
+        return UIContextMenuConfiguration(identifier: nil, previewProvider: nil) { suggestedActions in
+            
+            let locationInTableView = interaction.view?.convert(location, to: self.tableView) ?? location
+
+            let indexPath = self.tableView.indexPathForRow(at: locationInTableView)
+            var task = self.tasks[0]
+            if let index = indexPath {
+                task = self.searchController.isActive ? self.filteredTasks[index.row] : self.tasks[index.row]
+            }
+            
+            let editAction = UIAction(title: "Редактировать", image: UIImage(systemName: "square.and.pencil")) { action in
+                self.presenter.showTaskDetailView(navigationController: self.navigationController!, task: task)
+            }
+            
+            let shareAction = UIAction(title: "Поделиться", image: UIImage(systemName: "square.and.arrow.up")) { action in
+                self.presenter.shareTask(task: task)
+            }
+            
+            let deleteAction = UIAction(title: "Удалить", image: UIImage(systemName: "trash"), attributes: .destructive) { action in
+                self.deleteTask(at: indexPath!.row)
+            }
+            
+            return UIMenu(title: "", children: [editAction, shareAction, deleteAction])
+        }
+    }
+}

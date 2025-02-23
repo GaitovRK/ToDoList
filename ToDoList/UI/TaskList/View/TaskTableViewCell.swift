@@ -36,7 +36,7 @@ class TaskTableViewCell: UITableViewCell {
         descriptionLabel.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         dateLabel.font = UIFont.systemFont(ofSize: 12)
 
-        titleButton.setTitleColor(.white, for: .normal)
+//        titleButton.setTitleColor(.white, for: .normal)
         titleButton.contentHorizontalAlignment = .left
         titleButton.addTarget(self, action: #selector(titleButtonTapped), for: .touchUpInside)
 
@@ -104,7 +104,7 @@ class TaskTableViewCell: UITableViewCell {
             titleButton.setAttributedTitle(attributedString, for: .normal)
         } else {
             titleButton.setTitleColor(.white, for: .normal)
-            descriptionLabel.textColor = .white
+//            descriptionLabel.textColor = .darkText
             titleButton.setAttributedTitle(nil, for: .normal)
         }
     }

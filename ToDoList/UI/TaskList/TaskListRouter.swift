@@ -8,6 +8,7 @@
 import Foundation
 import UIKit
 protocol TaskListRouterProtocol {
+    func presentShareSheet(with items: [Any])
 }
 
 final class TaskListRouter: TaskListRouterProtocol {
@@ -31,5 +32,10 @@ final class TaskListRouter: TaskListRouterProtocol {
         let taskDetailModule = TaskDetailRouter.createTaskDetailModule()
         taskDetailModule.show(task: task)
         navigationController.pushViewController(taskDetailModule, animated: true)
+    }
+    
+    func presentShareSheet(with items: [Any]) {
+        let activityVC = UIActivityViewController(activityItems: items, applicationActivities: nil)
+        viewController?.present(activityVC, animated: true, completion: nil)
     }
 }

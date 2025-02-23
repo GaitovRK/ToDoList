@@ -10,11 +10,11 @@ import UIKit
 
 protocol TaskListPresenterProtocol: AnyObject {
     func viewDidLoad(view: TaskListView)
+    func shareTask(task: Task)
 }
 
 
 final class TaskListPresenter: TaskListPresenterProtocol {
-    
     weak var view: TaskListViewController?
     var interactor: TaskListInteractorInput
     var router: TaskListRouterProtocol
@@ -26,7 +26,6 @@ final class TaskListPresenter: TaskListPresenterProtocol {
     
     func viewDidLoad(view: TaskListView) {
         interactor.fetchTaskList()
-        print("Presenter viewDidLoad")
     }
     
     func showTaskDetailView(navigationController: UINavigationController, task: Task) {
@@ -40,6 +39,11 @@ final class TaskListPresenter: TaskListPresenterProtocol {
     func editTask(id: Int) {
         
     }
+    
+    func shareTask(task: Task) {
+        let items = [task.title]
+        router.presentShareSheet(with: items)
+    }
 }
 
 extension TaskListPresenter: TaskListInteractorOutput {
@@ -47,10 +51,4 @@ extension TaskListPresenter: TaskListInteractorOutput {
         print("Fetch tasks success")
         view?.show(tasks: tasks)
     }
-    
-//    func fetchTasksFailure(error: Error) {
-//        view?.fetchTasksFailure(error: error)
-//    }
-    
-    
 }

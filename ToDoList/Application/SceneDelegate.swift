@@ -25,6 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.tintColor = .systemYellow
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        window?.overrideUserInterfaceStyle = .dark
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
