@@ -9,6 +9,7 @@ import Foundation
 
 protocol TaskDetailPresenterProtocol {
     func viewDidLoad(view: TaskDetailView)
+    func saveTask(task: Task)
 }
 
 final class TaskDetailPresenter: TaskDetailPresenterProtocol {
@@ -25,8 +26,16 @@ final class TaskDetailPresenter: TaskDetailPresenterProtocol {
         self.view = view
     }
     
-    func editTask(task: Task) {
-        interactor.editTask(task: task)
+//    func editTask(task: Task) {
+//        interactor.editTask(task: task)
+//    }
+//
+//    func addTask(task: Task) {
+//        interactor.addTask(task: task)
+//    }
+    
+    func saveTask(task: Task) {
+        interactor.saveTask(task: task)
     }
 }
 

@@ -9,7 +9,9 @@ import Foundation
 
 protocol TaskDetailInteractorInput {
     func fetchTask()
-    func editTask(task: Task)
+//    func editTask(task: Task)
+//    func addTask(task: Task)
+    func saveTask(task: Task)
 }
 
 protocol TaskDetailInteractorOutput {
@@ -19,6 +21,10 @@ protocol TaskDetailInteractorOutput {
 }
 
 final class TaskDetailInteractor: TaskDetailInteractorInput {
+    func addTask(task: Task) {
+        repo.addTask(task: task)
+    }
+    
     var repo: TasksRepository
     var output: TaskDetailInteractorOutput?
     
@@ -30,7 +36,11 @@ final class TaskDetailInteractor: TaskDetailInteractorInput {
         
     }
     
-    func editTask(task: Task) {
-        repo.editTask(task: task)
+    func saveTask(task: Task) {
+        repo.saveTask(task: task)
     }
+    
+//    func editTask(task: Task) {
+//        repo.editTask(task: task)
+//    }
 }

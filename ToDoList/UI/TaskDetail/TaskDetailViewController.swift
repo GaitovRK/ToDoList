@@ -42,7 +42,7 @@ final class TaskDetailViewController: UIViewController, TaskDetailView {
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        presenter.editTask(task: task)
+        presenter.saveTask(task: task)
     }
     
     func displayUpdatedTask(_ task: Task) {

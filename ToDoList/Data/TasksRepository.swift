@@ -10,8 +10,9 @@ import Foundation
 
 protocol TasksRepositoryProtocol {
     func fetchTasks(completion: @escaping ([Task]) -> Void)
-    func createTask()
-    func editTask(task: Task)
+//    func addTask(task: Task)
+//    func editTask(task: Task)
+    func saveTask(task: Task)
     func deleteTask(id: Int)
 }
 
@@ -57,7 +58,34 @@ final class TasksRepository: TasksRepositoryProtocol {
         }
     }
     
-    func createTask() {
+    func saveTask(task: Task) {
+        let taskData: [String: Any] = [
+            "id": task.id,
+            "title": task.title,
+            "isCompleted": task.isCompleted,
+            "creationDate": task.creationDate,
+            "taskDescription": task.description,
+        ]
+        
+        let predicate = NSPredicate(format: "id == %d", task.id)
+        coreDataService.fetchEntities(ofType: TaskCoreData.self, withPredicate: predicate) { tasks in
+            if let task = tasks.first {
+                self.coreDataService.updateEntity(TaskCoreData.self, withPredicate: predicate, withData: taskData)
+            } else {
+                self.coreDataService.addEntity(ofType: TaskCoreData.self, withData: taskData)
+            }
+        }
+    }
+    
+    func addTask(task: Task) {
+        let taskData: [String: Any] = [
+            "id": task.id,
+            "title": task.title,
+            "isCompleted": task.isCompleted,
+            "creationDate": task.creationDate,
+            "taskDescription": task.description,
+        ]
+        coreDataService.addEntity(ofType: TaskCoreData.self, withData: taskData)
         
     }
     
@@ -74,14 +102,14 @@ final class TasksRepository: TasksRepositoryProtocol {
     }
     
     func deleteTask(id: Int) {
-    let predicate = NSPredicate(format: "id == %d", id)
-    coreDataService.fetchEntities(ofType: TaskCoreData.self, withPredicate: predicate) { tasks in
-        if let task = tasks.first {
-            self.coreDataService.deleteEntity(task)
-            print("Deleted task with id: \(id)")
-        } else {
-            print("No task found with id: \(id)")
+        let predicate = NSPredicate(format: "id == %d", id)
+        coreDataService.fetchEntities(ofType: TaskCoreData.self, withPredicate: predicate) { tasks in
+            if let task = tasks.first {
+                self.coreDataService.deleteEntity(task)
+                print("Deleted task with id: \(id)")
+            } else {
+                print("No task found with id: \(id)")
+            }
         }
     }
-}
 }

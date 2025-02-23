@@ -9,7 +9,22 @@ import Foundation
 import UIKit
 import CoreData
 
-final class CoreDataService {
+protocol CoreDataServiceProtocol {
+    func addEntity<T: NSManagedObject>(ofType type: T.Type, withData data: [String: Any])
+    func fetchEntities<T: NSManagedObject>(
+        ofType type: T.Type,
+        withPredicate predicate: NSPredicate?,
+        completion: @escaping ([T]) -> Void
+    )
+    func updateEntity<T: NSManagedObject>(
+        _ type: T.Type,
+        withPredicate predicate: NSPredicate?,
+        withData data: [String: Any]
+    )
+    func deleteEntity<T: NSManagedObject>(_ entity: T)
+}
+
+final class CoreDataService: CoreDataServiceProtocol {
     
     private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
 
