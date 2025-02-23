@@ -36,7 +36,6 @@ class TaskTableViewCell: UITableViewCell {
         descriptionLabel.font = UIFont.systemFont(ofSize: 12, weight: .bold)
         dateLabel.font = UIFont.systemFont(ofSize: 12)
 
-//        titleButton.setTitleColor(.white, for: .normal)
         titleButton.contentHorizontalAlignment = .left
         titleButton.addTarget(self, action: #selector(titleButtonTapped), for: .touchUpInside)
 
@@ -83,7 +82,6 @@ class TaskTableViewCell: UITableViewCell {
 
     func configure(with task: Task) {
         self.task = task
-        titleButton.setTitle(task.title, for: .normal)
         descriptionLabel.text = task.description
         checkboxButton.isSelected = task.isCompleted
         
@@ -103,9 +101,8 @@ class TaskTableViewCell: UITableViewCell {
             ])
             titleButton.setAttributedTitle(attributedString, for: .normal)
         } else {
-            titleButton.setTitleColor(.white, for: .normal)
-//            descriptionLabel.textColor = .darkText
-            titleButton.setAttributedTitle(nil, for: .normal)
+            let attributedString = NSAttributedString(string: task.title, attributes: [.foregroundColor: UIColor.white])
+            titleButton.setAttributedTitle(attributedString, for: .normal)
         }
     }
     
