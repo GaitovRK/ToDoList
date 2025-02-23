@@ -161,9 +161,9 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TaskCell", for: indexPath) as? TaskTableViewCell else {
             return UITableViewCell()
         }
+        cell.delegate = self
         let task = searchController.isActive ? filteredTasks[indexPath.row] : tasks[indexPath.row]
         cell.configure(with: task)
-        cell.delegate = self
         cell.selectionStyle = .none
         let interaction = UIContextMenuInteraction(delegate: self)
         cell.addInteraction(interaction)
@@ -171,8 +171,6 @@ extension TaskListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let task = searchController.isActive ? filteredTasks[indexPath.row] : tasks[indexPath.row]
-        presenter.showTaskDetailView(navigationController: navigationController!, task: task)
     }
 }
 
@@ -194,10 +192,20 @@ extension TaskListViewController: UISearchBarDelegate {
 }
 
 extension TaskListViewController: TaskTableViewCellDelegate {
+    func didTapCheckbox(in cell: TaskTableViewCell) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        if searchController.isActive {
+            filteredTasks[indexPath.row].isCompleted.toggle()
+        } else {
+            tasks[indexPath.row].isCompleted.toggle()
+        }
+        tableView.reloadRows(at: [indexPath], with: .automatic)
+    }
+
     func didTapTitleButton(in cell: TaskTableViewCell) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         let task = searchController.isActive ? filteredTasks[indexPath.row] : tasks[indexPath.row]
-        // Call your function here
+        presenter.showTaskDetailView(navigationController: navigationController!, task: task)
     }
 }
 

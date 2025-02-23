@@ -1,6 +1,7 @@
 import UIKit
 
 protocol TaskTableViewCellDelegate: AnyObject {
+    func didTapCheckbox(in cell: TaskTableViewCell)
     func didTapTitleButton(in cell: TaskTableViewCell)
 }
 
@@ -22,6 +23,7 @@ class TaskTableViewCell: UITableViewCell {
     }
 
     private func setupViews() {
+        contentView.isUserInteractionEnabled = true
         addSubview(titleButton)
         addSubview(descriptionLabel)
         addSubview(checkboxButton)
@@ -44,7 +46,7 @@ class TaskTableViewCell: UITableViewCell {
         config.baseBackgroundColor = .clear
         checkboxButton.configuration = config
         checkboxButton.isUserInteractionEnabled = true
-        checkboxButton.addTarget(self, action: #selector(toggleCheckbox), for: .touchUpInside)
+        checkboxButton.addTarget(self, action: #selector(checkboxButtonTapped), for: .touchUpInside)
 
         NSLayoutConstraint.activate([
             checkboxButton.topAnchor.constraint(equalTo: topAnchor, constant: 12),
@@ -69,14 +71,11 @@ class TaskTableViewCell: UITableViewCell {
         titleButton.bringSubviewToFront(self)
     }
 
-    @objc private func toggleCheckbox() {
-        guard var task = task else { return }
-        task.isCompleted.toggle()
-        configure(with: task)
+    @objc private func checkboxButtonTapped() {
+        delegate?.didTapCheckbox(in: self)
     }
 
     @objc private func titleButtonTapped() {
-        print("Title button tapped")
         delegate?.didTapTitleButton(in: self)
     }
 
